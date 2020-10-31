@@ -1,26 +1,60 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <h1>Annie</h1>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Annie</v-toolbar-title>
       <!-- -->
       <v-spacer />
-      <v-btn flat v-if="!$store.state.token" to="/Register">Register</v-btn>
-      <v-btn flat v-if="!$store.state.token" to="/Login">Login</v-btn>
-      <v-btn flat v-if="$store.state.token" @click="$store.commit('logout')"
+      <v-btn text v-if="!$store.state.token" to="/register">Register</v-btn>
+      <v-btn text v-if="!$store.state.token" to="/login">Login</v-btn>
+      <v-btn text v-if="$store.state.token" @click="$store.commit('logout')"
         >Logout</v-btn
       >
     </v-app-bar>
 
-    <v-navigation-drawer>
-      <!-- -->
-    </v-navigation-drawer>
+
 
     <!-- Sizes your content based upon application components -->
     <v-main>
+          <v-navigation-drawer  v-model="drawer"
+      absolute
+      top
+      temporary>
+      <!-- -->
+            <v-list
+        nav
+
+      >
+        <v-list-item-group
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item to="/">
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+          <v-divider dark></v-divider>
+          <v-list-item to="profiles">
+            <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="jobs">
+            <v-list-item-title>Jobs</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="bids">
+            <v-list-item-title>Bids</v-list-item-title>
+          </v-list-item>
+          <v-divider dark></v-divider>
+          <v-list-item to="register">
+            <v-list-item-title>Register</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="login">
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
       <!-- Provides the application the proper gutter -->
-      <v-container fluid>
-        <!-- If using vue-router 
-        <router-view></router-view>-->
+      <v-container>
+        <router-view></router-view>
       </v-container>
     </v-main>
 
@@ -41,7 +75,7 @@ export default {
   },
 
   data: () => ({
-    //
+    drawer: false
   }),
 };
 </script>

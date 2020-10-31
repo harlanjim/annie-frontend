@@ -10,6 +10,12 @@ npm install
 npm run serve
 ```
 
+### Run on a specific port
+```
+npm run serve -- --port 9000
+```
+
+
 ### Compiles and minifies for production
 ```
 npm run build
