@@ -5,11 +5,51 @@
       <v-toolbar-title>Annie</v-toolbar-title>
       <!-- -->
       <v-spacer />
-      <v-btn text v-if="!$store.state.token" to="/register">Register</v-btn>
-      <v-btn text v-if="!$store.state.token" to="/login">Login</v-btn>
-      <v-btn text v-if="$store.state.token" @click="$store.commit('logout')"
-        >Logout</v-btn
-      >
+          <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          icon
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        v-if="!$store.state.token" to="/register">
+          <v-icon>mdi-account-plus</v-icon>
+        </v-btn>
+      </template>
+      <span>Register</span>
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          icon
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        v-if="!$store.state.token" to="/login">
+          <v-icon>mdi-login</v-icon>
+        </v-btn>
+      </template>
+      <span>Login</span>
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          icon
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        v-if="$store.state.token" @click="$store.commit('logout')">
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+      </template>
+      <span>Logout</span>
+    </v-tooltip>
+
     </v-app-bar>
 
 
