@@ -28,7 +28,7 @@
               </v-flex>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="teal lighten-3"> Login </v-btn>
+                <v-btn color="teal lighten-3" @click="submitLogin"> Login </v-btn>
               </v-card-actions>
             </v-container>
           </v-form>
@@ -39,11 +39,23 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   data: () => ({
     show: false,
     userName: "",
     password: "",
   }),
+  methods: {
+     async submitLogin() {
+      this.login({userName: this.userName, password: this.password});
+    }
+  },
+  computed: {
+    ...mapActions([
+      'login'
+    ])
+  }
 };
 </script>
