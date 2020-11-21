@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
 
 export default {
   data: () => ({
@@ -49,13 +48,8 @@ export default {
   }),
   methods: {
      async submitLogin() {
-      this.login({userName: this.userName, password: this.password});
+      this.$store.dispatch("login",{username: this.userName, password: this.password});
     }
-  },
-  computed: {
-    ...mapActions([
-      'login'
-    ])
   }
-};
+}
 </script>
