@@ -11,6 +11,7 @@
               <v-flex>
                 <v-text-field
                   v-model="userName"
+                  :error-messages="errors"
                   label="User Name"
                   required
                 ></v-text-field>
@@ -43,12 +44,27 @@
 export default {
   data: () => ({
     show: false,
+    errors: [],
     userName: "",
     password: "",
   }),
   methods: {
      async submitLogin() {
-      this.$store.dispatch("login",{username: this.userName, password: this.password});
+      this.$store.dispatch("login",{username: this.userName, password: this.password})
+          .then(()=> this.$router.push("/"))
+          .catch(err => {
+            this.errors = [];
+            if(err.response && err.response.status == 403){
+              this.errors.push("Username or password invalid");
+            }
+            else{
+              this.errors.push("Something went wrong!");
+            }
+            
+            
+
+            }
+           );
     }
   }
 }
