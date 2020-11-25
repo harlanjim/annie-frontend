@@ -5,13 +5,14 @@
       <v-toolbar-title>Annie</v-toolbar-title>
       <!-- -->
       <v-spacer />
-      <v-tooltip bottom v-if="!$store.state.token">
+      <v-tooltip bottom >
         <template v-slot:activator="{ on }">
           <v-btn
             icon
             color="primary"
             dark
             v-on="on"
+            v-show="!$store.state.token"
             to="/register"
           >
             <v-icon>mdi-account-plus</v-icon>
@@ -20,13 +21,14 @@
         <span>Register</span>
       </v-tooltip>
 
-      <v-tooltip bottom v-if="!$store.state.token">
+      <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn 
           icon 
           color="primary" 
           dark 
           v-on="on" 
+          v-show="!$store.state.token"
           to="/login">
             <v-icon>mdi-login</v-icon>
           </v-btn>
@@ -34,13 +36,14 @@
         <span>Login</span>
       </v-tooltip>
 
-      <v-tooltip bottom v-if="$store.state.token">
+      <v-tooltip bottom >
         <template v-slot:activator="{ on }">
           <v-btn
             icon
             color="primary"
             dark
             v-on="on"
+            v-show="$store.state.token"
             @click="$store.commit('logout')"
           >
             <v-icon>mdi-logout</v-icon>
