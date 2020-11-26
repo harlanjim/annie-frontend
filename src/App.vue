@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Annie</v-toolbar-title>
       <!-- -->
@@ -73,12 +73,14 @@
               <v-list-item-title>Bids</v-list-item-title>
             </v-list-item>
             <v-divider dark></v-divider>
-            <v-list-item to="register">
+            <v-list-item to="register" v-show="!$store.state.token">
               <v-list-item-title>Register</v-list-item-title>
             </v-list-item>
-
-            <v-list-item to="login">
+            <v-list-item to="login" v-show="!$store.state.token">
               <v-list-item-title>Login</v-list-item-title>
+            </v-list-item>
+            <v-list-item v-show="$store.state.token" @click="$store.commit('logout')">
+              <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
           </v-list-item-group>
         </v-list>
