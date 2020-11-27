@@ -73,7 +73,7 @@
                 </v-row>
                 <v-card-actions> 
                   <v-spacer></v-spacer>
-                  <v-btn color="teal lighten-3" @click="submitLogin">
+                  <v-btn color="teal lighten-3" @click="submitRegistration">
                     Registration
                   </v-btn>
                 </v-card-actions>
@@ -101,5 +101,24 @@ export default {
     phoneType: "",
     phoneTypes: ["Mobile", "Work", "Home"]
   }),
+  methods: {
+     async submitRegistration() {
+       const rgstr = {  
+                username: this.userName, 
+                password: this.password,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                phone: this.phone,
+                phoneType: this.phoneType
+            };
+       this.$store.dispatch("register", rgstr)
+          .then(()=> this.$router.push("/login"))
+          .catch(err => {
+            this.errors = [];
+              this.errors.push(err.response.message);
+          });
+    }
+  }
 };
 </script>
