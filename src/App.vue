@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Annie</v-toolbar-title>
+      <v-toolbar-title>{{appName}}</v-toolbar-title>
       <!-- -->
       <v-spacer />
       <v-tooltip bottom >
@@ -98,7 +98,6 @@
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld';
 
 export default {
   name: "App",
@@ -109,6 +108,7 @@ export default {
 
   data: () => ({
     drawer: false,
+    appName: process.env.VUE_APP_NAME
   }),
 };
 </script>
