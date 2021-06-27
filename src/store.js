@@ -29,7 +29,11 @@ export default new Vuex.Store({
             state.token = '';
             localStorage.clear('token');
             axios.defaults.headers.common['Authorization'] = "";
-        }
+        },
+        initialiseStore(state) { // Repopulate user from local storage after browser refresh
+            state.token = localStorage.getItem('token');
+            axios.defaults.headers.common['Authorization'] = "Bearer " + state.token;
+          },
     },
     actions: {
         

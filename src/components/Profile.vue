@@ -1,4 +1,3 @@
-
 <template>
   <v-container>
     <v-card max-width="500" class="mx-auto" flat>
@@ -6,58 +5,32 @@
         <v-col cols="12">
           <v-card>
             <v-app-bar color="teal lighten-3">
-              <v-toolbar-title>Registration</v-toolbar-title>
+              <v-toolbar-title>Profile</v-toolbar-title>
             </v-app-bar>
             <v-form ref="form">
               <v-container>
                 <v-flex>
                   <v-text-field
-                    v-model="userName"
+                    v-model="profile.user.userName"
                     label="User Name"
                     required
                     :rules="nameRules"
                   ></v-text-field>
                 </v-flex>
-                <v-flex>
-                  <v-text-field
-                    v-model="password"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show ? 'text' : 'password'"
-                    name="input-10-1"
-                    label="Password"
-                    hint="At least 8 characters"
-                    @click:append="show = !show"
-                    required
-                    :rules="passwordRules"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex>
-                  <v-text-field
-                    v-model="passwordConfirm"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show ? 'text' : 'password'"
-                    name="input-10-1"
-                    label="Password Confirmation"
-                    hint="At least 8 characters"
-                    @click:append="show = !show"
-                    required
-                    :rules="passwordRules.concat(passwordConfirmationRule)"
-                  ></v-text-field>
-                </v-flex>
                 <v-text-field
-                  v-model="firstName"
+                  v-model="profile.firstName"
                   label="First Name"
                   required
                   :rules="[v => !!v || 'First Name is required']"
                 ></v-text-field>
                 <v-text-field
-                  v-model="lastName"
+                  v-model="profile.lastName"
                   label="Last Name"
                   required
                   :rules="[v => !!v || 'Last Name is required']"
                 ></v-text-field>
                 <v-text-field
-                  v-model="email"
+                  v-model="profile.email"
                   label="Email"
                   required
                   :rules="emailRules"
@@ -66,14 +39,13 @@
                   <v-col>
                     <v-select
                       :items="phoneTypes"
-                      v-model="phoneType"
                       label="Phone Type"
                       solo
                     ></v-select>
                   </v-col>
                   <v-col>
                     <v-text-field
-                      v-model="phone"
+                      v-model="profile.phone"
                       label="Phone"
                       required
                     ></v-text-field>
@@ -110,29 +82,13 @@ export default {
         v => !!v || 'Email is required',
         v => (/.+@.+\..+/.test(v)) || 'E-mail must be valid',
      ],
-    userName: "",
-    password: "",
-    passwordConfirm: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    phoneType: "",
-    phoneTypes: ["Mobile", "Work", "Home"]
+    profile: null,
+
   }),
   methods: {
      async submitRegistration() {
        if (this.$refs.form.validate())
        {
-        const rgstr = {  
-                  username: this.userName, 
-                  password: this.password,
-                  firstName: this.firstName,
-                  lastName: this.lastName,
-                  email: this.email,
-                  phone: this.phone,
-                  phoneType: this.phoneType
-              };
         this.$store.dispatch("register", rgstr)
             .then(()=> this.$router.push("/login"))
             .catch(err => {

@@ -35,5 +35,6 @@ new Vue({
   vuetify,
   router,
   store,
+  beforeCreate() { this.$store.commit('initialiseStore');}, // Initialize store with local browser storage.
   render: h => h(App)
 }).$mount('#app')
