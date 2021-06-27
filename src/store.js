@@ -28,6 +28,7 @@ export default new Vuex.Store({
         logout(state) {
             state.token = '';
             localStorage.clear('token');
+            axios.defaults.headers.common['Authorization'] = "";
         }
     },
     actions: {
@@ -51,13 +52,13 @@ export default new Vuex.Store({
         async register({ commit }, registerData) {
             let token = (await axios.post("http://localhost:9000/registration", registerData)).data;
             localStorage.setItem("token", token);
-            axios.defaults.headers.common['Authorization'] = token;
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token;
             commit("auth", token);
         },
         async login({ commit }, loginData) {
             let token = (await axios.post("http://localhost:9000/authenticate", loginData)).data.jwt;
             localStorage.setItem("token", token);
-            axios.defaults.headers.common['Authorization'] = token;
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token;
             commit("auth", token);
         }
 

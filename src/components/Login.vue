@@ -33,6 +33,9 @@
               </v-card-actions>
             </v-container>
           </v-form>
+          <v-alert type="error" v-show="globalError">
+            {{globalError}}
+          </v-alert>
         </v-card>
       </v-col>
     </v-row>
@@ -47,24 +50,23 @@ export default {
     errors: [],
     userName: "",
     password: "",
+    globalError: null
   }),
   methods: {
      async submitLogin() {
+       this.globalError = null;
       this.$store.dispatch("login",{username: this.userName, password: this.password})
           .then(()=> this.$router.push("/"))
           .catch(err => {
             this.errors = [];
             if(err.response && err.response.status == 403){
-              this.errors.push("Username or password invalid");
+              this.globalError="Username or password invalid";
             }
             else{
-              this.errors.push("Something went wrong!");
+              this.globalError="Something went wrong!";
             }
-            
-            
-
-            }
-           );
+          }
+      );
     }
   }
 }

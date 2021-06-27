@@ -44,7 +44,7 @@
             dark
             v-on="on"
             v-show="$store.state.token"
-            @click="$store.commit('logout')"
+            @click="logout"
           >
             <v-icon>mdi-logout</v-icon>
           </v-btn>
@@ -63,13 +63,13 @@
               <v-list-item-title>Home</v-list-item-title>
             </v-list-item>
             <v-divider dark></v-divider>
-            <v-list-item to="profiles">
+            <v-list-item to="profiles" v-show="$store.state.token">
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
-            <v-list-item to="jobs">
+            <v-list-item to="jobs" v-show="$store.state.token">
               <v-list-item-title>Jobs</v-list-item-title>
             </v-list-item>
-            <v-list-item to="bids">
+            <v-list-item to="bids" v-show="$store.state.token">
               <v-list-item-title>Bids</v-list-item-title>
             </v-list-item>
             <v-divider dark></v-divider>
@@ -79,7 +79,7 @@
             <v-list-item to="login" v-show="!$store.state.token">
               <v-list-item-title>Login</v-list-item-title>
             </v-list-item>
-            <v-list-item v-show="$store.state.token" @click="$store.commit('logout')">
+            <v-list-item v-show="$store.state.token" @click="logout">
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
           </v-list-item-group>
@@ -110,5 +110,12 @@ export default {
     drawer: false,
     appName: process.env.VUE_APP_NAME
   }),
+  methods: {
+    logout: function () {
+      console.log("Attempting to logout...")
+      this.$store.commit('logout');
+      this.$router.push("/login");
+    }
+  }
 };
 </script>

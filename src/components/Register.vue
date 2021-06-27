@@ -8,14 +8,14 @@
             <v-app-bar color="teal lighten-3">
               <v-toolbar-title>Registration</v-toolbar-title>
             </v-app-bar>
-            <v-form ref="form" lazy-validation>
+            <v-form ref="form">
               <v-container>
                 <v-flex>
                   <v-text-field
                     v-model="userName"
-                    :error-messages="errors"
                     label="User Name"
                     required
+                    :rules="nameRules"
                   ></v-text-field>
                 </v-flex>
                 <v-flex>
@@ -27,6 +27,8 @@
                     label="Password"
                     hint="At least 8 characters"
                     @click:append="show = !show"
+                    required
+                    :rules="passwordRules"
                   ></v-text-field>
                 </v-flex>
                 <v-flex>
@@ -38,22 +40,27 @@
                     label="Password Confirmation"
                     hint="At least 8 characters"
                     @click:append="show = !show"
+                    required
+                    :rules="passwordRules.concat(passwordConfirmationRule)"
                   ></v-text-field>
                 </v-flex>
                 <v-text-field
                   v-model="firstName"
                   label="First Name"
                   required
+                  :rules="[v => !!v || 'First Name is required']"
                 ></v-text-field>
                 <v-text-field
                   v-model="lastName"
                   label="Last Name"
                   required
+                  :rules="[v => !!v || 'Last Name is required']"
                 ></v-text-field>
                 <v-text-field
                   v-model="email"
                   label="Email"
                   required
+                  :rules="emailRules"
                 ></v-text-field>
                 <v-row>
                   <v-col>
@@ -91,6 +98,17 @@ export default {
   data: () => ({
     show: false,
     errors: [],
+    nameRules: [
+        v => !!v || 'User Name is required',
+        v => (v && v.length >= 3) || 'User Name must be more than 3 characters',
+     ],
+     passwordRules: [
+        v => !!v || 'Password is required',
+     ],
+     emailRules: [
+        v => !!v || 'Email is required',
+        v => (/.+@.+\..+/.test(v)) || 'E-mail must be valid',
+     ],
     userName: "",
     password: "",
     passwordConfirm: "",
@@ -103,22 +121,30 @@ export default {
   }),
   methods: {
      async submitRegistration() {
-       const rgstr = {  
-                username: this.userName, 
-                password: this.password,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                phone: this.phone,
-                phoneType: this.phoneType
-            };
-       this.$store.dispatch("register", rgstr)
-          .then(()=> this.$router.push("/login"))
-          .catch(err => {
-            this.errors = [];
-              this.errors.push(err.response.message);
-          });
+       if (this.$refs.form.validate())
+       {
+        const rgstr = {  
+                  username: this.userName, 
+                  password: this.password,
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  phone: this.phone,
+                  phoneType: this.phoneType
+              };
+        this.$store.dispatch("register", rgstr)
+            .then(()=> this.$router.push("/login"))
+            .catch(err => {
+              this.errors = [];
+                this.errors.push(err.response.message);
+            });
+       }
     }
+  },
+  computed: {
+    passwordConfirmationRule() {
+        return () => (this.password === this.passwordConfirm) || 'Password must match'
+    },
   }
 };
 </script>
