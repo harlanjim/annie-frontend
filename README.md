@@ -39,4 +39,9 @@ docker build -t annie-frontend/annie-frontend-app .
 docker run -it -p 8080:8080 --rm --name annie-frontend-app-1 annie-frontend/annie-frontend-app:latest
 ```
 
+docker tag annie-frontend/annie-frontend-app:latest fahenterprises.xyz:5000/annie-frontend/annie-frontend-app:latest
 
+
+docker push fahenterprises.xyz:5000/annie-frontend/annie-frontend-app:latest
+
+docker login -u user -p password fahenterprises.xyz:5000
